@@ -1,0 +1,572 @@
+{% extends "base.html" %}
+{% block title %}{% endblock %}
+{% block content %}
+
+<style>
+    html {
+        height: 100%;
+        min-height: 800px;
+    }
+
+    body {
+        background: url('https://raw.githubusercontent.com/hmpms-iscte/wake/main/wake_img/pexels_roupa.jpeg');
+        background-size: cover;
+        background-repeat: repeat;
+        text-align: center;
+        color: #eee;
+        font-family: "Poppins", sans-serif;
+        font-size: 16px;
+
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    h1 {
+        color: #eee;
+        font-family: "Poppins", sans-serif;
+        font-size: 36px;
+        font-weight: 600;
+        margin-top: 30px;
+    }
+
+    #svg_form_time {
+        height: 15px;
+        max-width: 80%;
+        margin: 40px auto 20px;
+        display: block;
+    }
+
+    #svg_form_time circle,
+    #svg_form_time rect {
+        fill: white;
+    }
+
+    .button {
+        background: #06b;
+        border-radius: 5px;
+        padding: 15px 25px;
+        display: inline-block;
+        margin: 10px;
+        font-weight: bold;
+        color: white;
+        cursor: pointer;
+        box-shadow: 0px 2px 5px rgb(0, 0, 0, 0.5);
+    }
+
+    .button:hover {
+        filter: brightness(90%);
+    }
+
+    .disabled {
+        display: none;
+    }
+
+    section {
+        background-color: #15172b;
+        border-radius: 20px;
+        box-sizing: border-box;
+        height: auto;
+        padding: 20px;
+        padding-bottom: 30px;
+        width: 320px;
+        text-align: center;
+        position: relative;
+        margin: auto;
+    }
+
+    p {
+        text-align: center;
+        margin-top: 0;
+        font-size: 18px;
+
+    }
+
+
+    .input-container {
+        height: 50px;
+        position: relative;
+        width: 100%;
+    }
+
+    .ic1 {
+        margin-top: 40px;
+    }
+
+    .ic2 {
+        margin-top: 30px;
+    }
+
+    .input {
+        background-color: #303245;
+        border-radius: 12px;
+        border: 0;
+        box-sizing: border-box;
+        color: #eee;
+        font-size: 18px;
+        font-family: "Poppins", sans-serif;
+        height: 100%;
+        outline: 0;
+        padding: 4px 20px 0;
+        width: 100%;
+    }
+
+    .form {
+        background-color: #15172b;
+        border-radius: 20px;
+        box-sizing: border-box;
+        height: 525px;
+        padding: 20px;
+        width: 320px;
+        text-align: center;
+        position: relative;
+        margin: auto;
+    }
+
+    label {
+        background-color: #303245;
+        border-radius: 12px;
+        border: 4px;
+        border-style: solid;
+        border-color: #303245;
+        box-sizing: border-box;
+        color: #eee;
+        font-size: 18px;
+        font-family: "Poppins", sans-serif;
+        height: auto;
+        outline: 0;
+        padding: 4px 20px 0;
+        width: 80%;
+        font-display: auto;
+    }
+
+    input[type="radio"] {
+        display: none;
+    }
+
+    input[type="radio"]:checked+label {
+        border-color: #06b;
+
+    }
+
+    input[type="submit"] {
+        font-size: larger;
+        background-color: rgb(9, 129, 226);
+    }
+
+    /* Style the button and place it in the middle of the container/image */
+    .container .btn {
+        position: absolute;
+        top: 70%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        font-size: 20px;
+        padding: 12px 24px;
+        cursor: pointer;
+        border-radius: 5px;
+        background-color: #11384b;
+        border: none;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        text-transform: uppercase;
+        -webkit-box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
+        box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
+        -webkit-border-radius: 5px 5px 5px 5px;
+        border-radius: 5px 5px 5px 5px;
+        margin: 5px 20px 40px 20px;
+        -webkit-transition: all 0.3s ease-in-out;
+        -moz-transition: all 0.3s ease-in-out;
+        -ms-transition: all 0.3s ease-in-out;
+        -o-transition: all 0.3s ease-in-out;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .container .btn:hover {
+        background-color: #56baed;
+
+    }
+
+
+
+
+
+    /* Modal Window sTyles */
+
+    .wrapper a {
+        display: inline-block;
+        text-decoration: none;
+        padding: 15px;
+        background-color: rgba(255, 255, 255, 0);
+        border-radius: 3px;
+        color: #e3fc00;
+        font-family: 'Roboto', sans-serif;
+    }
+
+    .modal {
+        visibility: hidden;
+        opacity: 0;
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(236, 33, 33, 0);
+        transition: all .4s;
+        width: 500px;
+        height: 630px;
+        top: 0;
+        right: 0;
+        margin: -80px;
+        border-radius: 20px;
+        padding: 0px;
+    }
+
+    .modal:target {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    .modal__content {
+        border-radius: 10px;
+        position: relative;
+        width: 500px;
+        max-width: 100%;
+        height: auto;
+        background: rgb(27, 26, 26);
+        padding-left: 5px;
+        padding-top: 20px;
+    }
+
+    .modal__content p {
+        font-size: 15px;
+        color: #eaf17b;
+        padding: 10px;
+    }
+
+    .modal__footer p {
+        font-size: 15px;
+        text-align: right;
+        padding-right: 10px;
+    }
+
+
+    .modal__close {
+        position: relative;
+        top: -620px;
+        right: -230px;
+        color: #fd0404;
+        text-decoration: none;
+    }
+
+    /* width */
+    ::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: #888;
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+</style>
+
+
+<head>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js" type="text/javascript"></script>
+    <script>
+        $(document).ready(function () {
+            var base_color = "rgb(230,230,230)";
+            var active_color = "#06b";
+
+
+
+            var child = 1;
+            var length = $("section").length - 1;
+            $("#prev").addClass("disabled");
+            $("#submit").addClass("disabled");
+
+            $("section").not("section:nth-of-type(1)").hide();
+            $("section").not("section:nth-of-type(1)").css('transform', 'translateX(100px)');
+
+            var svgWidth = length * 200 + 24;
+            $("#svg_wrap").html(
+                '<svg version="1.1" id="svg_form_time" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 ' +
+                svgWidth +
+                ' 24" xml:space="preserve"></svg>'
+            );
+
+            function makeSVG(tag, attrs) {
+                var el = document.createElementNS("http://www.w3.org/2000/svg", tag);
+                for (var k in attrs) el.setAttribute(k, attrs[k]);
+                return el;
+            }
+
+            for (i = 0; i < length; i++) {
+                var positionX = 12 + i * 200;
+                var rect = makeSVG("rect", { x: positionX, y: 9, width: 200, height: 6 });
+                document.getElementById("svg_form_time").appendChild(rect);
+                // <g><rect x="12" y="9" width="200" height="6"></rect></g>'
+                var circle = makeSVG("circle", {
+                    cx: positionX,
+                    cy: 12,
+                    r: 12,
+                    width: positionX,
+                    height: 6
+                });
+                document.getElementById("svg_form_time").appendChild(circle);
+            }
+
+            var circle = makeSVG("circle", {
+                cx: positionX + 200,
+                cy: 12,
+                r: 12,
+                width: positionX,
+                height: 6
+            });
+            document.getElementById("svg_form_time").appendChild(circle);
+
+            $('#svg_form_time rect').css('fill', base_color);
+            $('#svg_form_time circle').css('fill', base_color);
+            $("circle:nth-of-type(1)").css("fill", active_color);
+
+
+            $(".button").click(function () {
+                $("#svg_form_time rect").css("fill", active_color);
+                $("#svg_form_time circle").css("fill", active_color);
+                var id = $(this).attr("id");
+                if (id == "next") {
+                    $("#prev").removeClass("disabled");
+                    if (child >= length) {
+                        $(this).addClass("disabled");
+                        $('#submit').removeClass("disabled");
+                    }
+                    if (child <= length) {
+                        child++;
+                    }
+                } else if (id == "prev") {
+                    $("#next").removeClass("disabled");
+                    $('#submit').addClass("disabled");
+                    if (child <= 2) {
+                        $(this).addClass("disabled");
+                    }
+                    if (child > 1) {
+                        child--;
+                    }
+                }
+                var circle_child = child + 1;
+                $("#svg_form_time rect:nth-of-type(n + " + child + ")").css(
+                    "fill",
+                    base_color
+                );
+                $("#svg_form_time circle:nth-of-type(n + " + circle_child + ")").css(
+                    "fill",
+                    base_color
+                );
+                var currentSection = $("section:nth-of-type(" + child + ")");
+                currentSection.fadeIn();
+                currentSection.css('transform', 'translateX(0)');
+                currentSection.prevAll('section').css('transform', 'translateX(-100px)');
+                currentSection.nextAll('section').css('transform', 'translateX(100px)');
+                $('section').not(currentSection).hide();
+            });
+
+        });
+    </script>
+
+
+</head>
+
+<body>
+
+    {% if session['loggedin'] %}
+
+    <!--FONTE: https://codepen.io/ainalem/pen/GRqPwoz-->
+    <!--FONTE: https://codepen.io/webbarks/full/QWjwWNV-->
+
+    <div id="svg_wrap"></div>
+    <form method="post">
+        <h1>Bem-Vindo à Loja WAKE</h1>
+        
+        <section>
+            Primeiro vamos necessitar de algumas informações tuas<br><br>
+            Depois responderás a um questionário de estilos de roupa<br><br>
+            Por último vais indicar os tipos de roupa que queres comprar e se queres visualizar as escolhas do nosso
+            algoritmo
+
+
+            <div class="wrapper">
+                <a href="#demo-modal"><u>Sabe mais aqui</u></a>
+            </div>
+
+            <div id="demo-modal" class="modal">
+                <div class="modal__content">
+                    <h1>Funcionamento WAKE</h1>
+
+                    <p>
+                        &#8226; A WAKE utiliza avançados algoritmos de inteligência artificial para te proporcionar o
+                        melhor serviço.
+                    </p>
+                    <p>&#8226; Para que a roupa tenha o tamanho perfeito para ti, precisamos que respondas às perguntas
+                        que se seguem acerca de tamanhos.</p>
+                    <p>
+                        &#8226; Para que os algoritmos percebam o teu estilo de roupa precisas de escolher um conjunto
+                        de
+                        outfits que te sentirías confortável a utilizar.
+                    </p>
+                    <p>
+                        &#8226; Finalmente pedimos-te que indiques o tipo de peças que precisas de comprar (calças,
+                        tshirt, ...) e o dinheiro que estás dispost@ a gastar.
+                    </p>
+                    <p>
+                        &#8226; Ainda te damos a oportunidade de visualizar as roupas escolhidas pelos nossos
+                        algoritmos. Mas também podes optar por ser surpreendido quando a encomenda chegar a tua casa.
+                    </p>
+
+                    <div class="modal__footer">
+                        <p>A tua equipa WAKE</p>
+                    </div>
+
+                    <a href="#" class="modal__close">&times;</a>
+                </div>
+            </div>
+
+        </section>
+
+
+        <section>
+            <p>Informações Pessoais</p>
+            <div class="input-container ic2">
+                <select id='genero' class="input" name='genero' placeholder="Selecione o género" required>
+                    <option value="">Escolhe o género</option>
+                    <option value="Male">Masculino</option>
+                    <option value="Female">Feminino</option>
+                </select>
+            </div>
+            <div class="input-container ic1">
+                <input type="number" id="altura" class="input" name="altura" placeholder="Altura em cm" min="100"
+                    max="250" required>
+            </div>
+            <div class="input-container ic1">
+                <input type="number" id="peso" class="input" name="peso" placeholder="Peso em kg" min="35" max="250"
+                    required>
+            </div>
+
+        </section>
+
+        <section>
+            <p>Quando experimentas camisolas, como customa ficar a gola?</p>
+            <div class="input-container ic1">
+                <input type="radio" name="gola" id="1" class="input-hidden" />
+                <label for="1">Muito Apertado</label>
+
+            </div>
+            <div class="input-container ic1">
+                <input type="radio" name="gola" id="2" class="input-hidden" />
+                <label for="2">Perfeito</label>
+            </div>
+            <div class="input-container ic1">
+                <input type="radio" name="gola" id="3" class="input-hidden" />
+                <label for="3">Muito Largo</label>
+            </div>
+
+
+        </section>
+
+        <section>
+            <p>E os ombros?</p>
+            <div class="input-container ic1">
+                <input type="radio" name="ombros" id="11" />
+                <label for="11">Muito Apertado</label>
+            </div>
+            <div class="input-container ic1">
+                <input type="radio" name="ombros" id="12" />
+                <label for="12">Perfeito</label>
+            </div>
+            <div class="input-container ic1">
+                <input type="radio" name="ombros" id="13" />
+                <label for="13">Muito Largo</label>
+            </div>
+        </section>
+
+        <section>
+            <p>E as mangas?</p>
+            <div class="input-container ic1">
+                <input type="radio" name="mangas" id="21" />
+                <label for="21">Demasiado Curtas</label>
+            </div>
+            <div class="input-container ic1">
+                <input type="radio" name="mangas" id="22" />
+                <label for="22">Perfeitas</label>
+            </div>
+            <div class="input-container ic1">
+                <input type="radio" name="mangas" id="23" />
+                <label for="23">Demasiado Compridas</label>
+            </div>
+        </section>
+
+        <section>
+            <p>Quando experimentas calças, como customa ficar de largura?</p>
+            <div class="input-container ic1">
+                <input type="radio" name="largura" id="31" />
+                <label for="31">Muito Apertado</label>
+            </div>
+            <div class="input-container ic1">
+                <input type="radio" name="largura" id="32" />
+                <label for="32">Perfeito</label>
+            </div>
+            <div class="input-container ic1">
+                <input type="radio" name="largura" id="33" />
+                <label for="33">Muito Largo</label>
+            </div>
+        </section>
+
+        <section>
+            <p>E em termos de comprimento?</p>
+            <div class="input-container ic1">
+                <input type="radio" name="comprimento" id="41" />
+                <label for="41">Demasiado Curtas</label>
+            </div>
+            <div class="input-container ic1">
+                <input type="radio" name="comprimento" id="42" />
+                <label for="42">Perfeitas</label>
+            </div>
+            <div class="input-container ic1">
+                <input type="radio" name="comprimento" id="43" />
+                <label for="43">Demasiado Compridas</label>
+            </div>
+        </section>
+
+        <div class="button" id="prev">&larr; Anterior</div>
+        <div class="button" id="next">Próximo &rarr;</div>
+
+        <input type="submit" id="submit" class="button" value="CONFIRMAR">
+    </form>
+
+    {% else %}
+    <div class="container" id="header-waves">
+        <img class="bg" src="https://raw.githubusercontent.com/hmpms-iscte/wake/main/wake_img/femea_forms.jpg" />
+        <input class="btn" type="button" onclick="location.href='login';"
+            value="FAZ LOGIN PARA PREENCHERES O TEU FORMULÁRIO...">
+    </div>
+
+
+
+    {% endif %}
+</body>
+
+{% endblock %}
