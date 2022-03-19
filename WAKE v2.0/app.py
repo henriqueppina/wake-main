@@ -7,7 +7,7 @@ import re
 import roupascluster
 import random
 from flask_mail import Mail, Message
-import itertools
+
 
 
 
@@ -519,7 +519,7 @@ def package():
 
 
     
-
+"""
     ##############################CHATBOT#################################
 # libraries
 import random
@@ -609,7 +609,7 @@ def getResponse(ints, intents_json):
             result = random.choice(i["responses"])
             break
     return result
-
+"""
     ###############################################################
 
 
